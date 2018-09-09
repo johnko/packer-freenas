@@ -16,6 +16,7 @@
       "ssh_password": "freenas",
       "ssh_port": 22,
       "ssh_wait_timeout": "8m",
+      "headless": true,
       "boot_command":
       [
         "<enter>",
