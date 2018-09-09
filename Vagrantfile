@@ -47,6 +47,20 @@ Vagrant.configure("2") do |config|
 
     # Customize the amount of memory on the VM:
     vb.memory = "1024"
+
+    # Add SATA Controller
+    vb.customize ['storagectl', :id, '--name', 'SATA Controller', '--add', 'sata']
+
+    # Create disk
+    file_to_disk = 'disk-ada1-tank.vdi'
+    unless File.exist?(file_to_disk)
+      # 100 * 1024 = 100 GB
+      vb.customize ['createhd', '--filename', file_to_disk, '--size', 100 * 1024]
+    end
+
+    # Attach disk
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', file_to_disk]
+
   end
 
   # Disable the default /vagrant share
