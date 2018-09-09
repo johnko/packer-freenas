@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "public_network", bridge: [
     "en0: Wi-Fi (AirPort)",
     "eth0: ",
-  ], :mac => "0800274F79E1"
+  ], :mac => "080027F33A55"
 
   config.vm.provider "virtualbox" do |vb|
     # Don't display the VirtualBox GUI when booting the machine
