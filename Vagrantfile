@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
   # your network.
   config.vm.network "public_network", bridge: [
     "en0: Wi-Fi (AirPort)",
-    "eth0: ",
+    "wlx503eaa4f3a9f",
   ], :mac => "080027F33A55"
 
   config.vm.provider "virtualbox" do |vb|
