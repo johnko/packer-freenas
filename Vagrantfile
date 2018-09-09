@@ -2,12 +2,21 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "freenas/11.1u6x64"
 
+  config.ssh.username = "root"
+  config.ssh.password = "freenas"
+  config.ssh.shell = "sh"
+  config.ssh.sudo_command = "%c"
+
+  config.vm.box = "freenas/11.1u6x64"
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
   config.vm.box_check_update = false
+
+  config.vm.guest = :freebsd
+
+  config.vm.hostname = "freenas.local"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -27,7 +36,18 @@ Vagrant.configure("2") do |config|
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-  config.vm.network "public_network"
+  config.vm.network "public_network", bridge: [
+    "en0: Wi-Fi (AirPort)",
+    "eth0: ",
+  ]
+
+  config.vm.provider "virtualbox" do |vb|
+    # Don't display the VirtualBox GUI when booting the machine
+    vb.gui = false
+
+    # Customize the amount of memory on the VM:
+    vb.memory = "1024"
+  end
 
   # Disable the default /vagrant share
   config.vm.synced_folder ".", "/vagrant", disabled: true
@@ -37,16 +57,5 @@ Vagrant.configure("2") do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "/userdata/data/freenas", "/tank/freenas"
-
-  config.ssh.username = "root"
-  config.ssh.password = "freenas"
-
-  config.vm.provider "virtualbox" do |vb|
-    # Don't display the VirtualBox GUI when booting the machine
-    vb.gui = false
-
-    # Customize the amount of memory on the VM:
-    vb.memory = "1024"
-  end
 
 end

@@ -4,7 +4,7 @@ Packer templates for FreeNAS
 Delete existing box (optional):
 ```
 rm ./FreeNAS-11.1-U6-x64-vbox.box
-vagrant box remove freenas/11.1u6x64
+vagrant box remove --force freenas/11.1u6x64
 ```
 
 Build new box:
