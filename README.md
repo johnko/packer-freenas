@@ -31,3 +31,17 @@ TOKEN=$(grep -o 'csrfmiddlewaretoken[^/]*/' csrfoutput.txt | awk -F"'" '{print $
 curl -X PUT -u root:freenas -H "${COOKIE}" -H 'Content-Type: application/json' -d "{\"csrfmiddlewaretoken\": \"${TOKEN}\", \"objects\": [{\"volume_name\": \"tank\", \"layout\": [ { \"vdevtype\": \"stripe\", \"disks\": [ \"ada1\" ]}]}]}" http://localhost/api/v1.0/storage/volume/
 rm csrfoutput.txt
 ```
+
+Port forward ssh to a freenas plugin port (optional):
+```
+cat >>~/.ssh/config <<EOF
+Host freenas
+    User root
+    Hostname x.x.x.x
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/id_rsa
+    PasswordAuthentication no
+EOF
+ssh -N -L 9091:10.0.2.1:9091 freenas
+open http://127.0.0.1:9091/
+```
